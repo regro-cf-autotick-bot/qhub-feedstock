@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qhub-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/qhub-{{ version }}.tar.gz
   sha256: dd42e40dc7bdc9ee8b52c2a18d83884e74af0a88467f8fca6a950b9ca44514d4
 
 build:
-  number: 0
+  number: 1
   noarch: python
   entry_points:
     - qhub = qhub.__main__:main
@@ -19,11 +19,11 @@ build:
 
 requirements:
   host:
-    - python >=3.8,<4.0
+    - python {{ python_min }}
     - pip
     - setuptools_scm
   run:
-    - python >=3.8,<4.0
+    - python >={{ python_min }},<4.0
     - auth0-python
     - bcrypt
     - boto3
@@ -52,6 +52,7 @@ test:
     - if [[ $(qhub --version) != {{ version }} ]]; then exit 1; else exit 0; fi
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/quansight/qhub
